@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+{{product.description|truncatewords:155}}
+{% endblock %}
+{% block title %}
+  {% if category %}
+     {{product.name }}-cosma store
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="row my_prod_row">
+    <div class="mx_auto">
+        <p><a href="{% url 'shopapp:allprodcat' %}">home</a> |  <a href="{{product.category.get_url}}">{{product.category}}</a>|{{product.name}} </p>
+    </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-10 col-sm-10 col-md-10 col-lg-6 ">
+        <div style="min-width:18rem">
+            <img src="{{product.image.url}}" alt="{{product.name}}" width="300px" height="300px">
+        </div>
+    </div>
+    <div>
+        <div class="col-md-10 col-sm-10 col-md-10 col-lg-6">
+
+           <h1 class="my_prod_title">{{product.name}}</h1>
+            <p>₹{{product.price}}</p>
+            <p class="my_title" >PRODUCT DESCRIPTION</p>
+            <p class="text-justify my_prod_text">{{product.description}}</p>
+            {% if product.stock <= 0 %}
+            <p class="text-justify my_prod_text"><b style="color:red">OUT OF STOCK</b></p>
+            {% else %}
+            <a class="btn btn-secondary" href="{% url 'cartapp:add_cart' product.id %}">ADD TO CART</a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}
+
